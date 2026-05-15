@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { redirigirSegunRol } from '../utils/router';
@@ -111,6 +111,14 @@ const Login: React.FC = () => {
               required
               disabled={loading}
             />
+            <div className="flex justify-end mt-1">
+              <Link 
+                to="/forgot-password" 
+                className="text-xs text-text-secondary hover:text-primary transition-colors"
+              >
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
           </div>
 
           <button 
