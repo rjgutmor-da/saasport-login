@@ -11,7 +11,7 @@ export default defineConfig({
     basicSsl()
   ],
   server: {
-    https: true,
-    port: 5174, // Puerto para el portal de login
+    https: {}, 
+    port: 5174,
   }
 })
