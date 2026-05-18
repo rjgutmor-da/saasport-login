@@ -5,6 +5,17 @@ export const DESTINOS_PERMITIDOS: Record<string, string> = {
   finanzas: import.meta.env.VITE_URL_FINANZAS || '',
 };
 
+export const getDestinoDinamico = (destinoOriginal: string): string => {
+  if (!destinoOriginal) return '';
+  if (window.location.hostname !== 'login.saasport.pro') {
+    if (destinoOriginal.includes('localhost') || destinoOriginal.includes('127.0.0.1') || /https?:\/\/\d+\.\d+\.\d+\.\d+/.test(destinoOriginal)) {
+      const currentHostname = window.location.hostname;
+      return destinoOriginal.replace(/(https?:\/\/)([^:/]+)(:\d+)?/, `$1${currentHostname}$3`);
+    }
+  }
+  return destinoOriginal;
+};
+
 export const redirigirSegunRol = async (redirectParam: string | null) => {
   try {
     const { data: { session }, error: sessionError } = await supabase.auth.getSession();
@@ -49,7 +60,8 @@ export const redirigirSegunRol = async (redirectParam: string | null) => {
     }
 
     if (destino) {
-      window.location.href = destino;
+      const destinoDinamico = getDestinoDinamico(destino);
+      window.location.href = destinoDinamico;
     } else {
       console.error('No se pudo determinar el destino de redirección', DESTINOS_PERMITIDOS);
     }
