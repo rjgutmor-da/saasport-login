@@ -48,9 +48,13 @@ const Login: React.FC = () => {
       
     } catch (err: any) {
       console.error(err);
-      setError(err.message === 'Invalid login credentials' 
-        ? 'Credenciales inválidas' 
-        : 'Ocurrió un error al intentar iniciar sesión');
+      if (err.message === 'Invalid login credentials') {
+        setError('Credenciales inválidas');
+      } else if (err.message === 'Email not confirmed') {
+        setError('Por favor confirma tu correo electrónico');
+      } else {
+        setError('Ocurrió un error al intentar iniciar sesión');
+      }
       setLoading(false);
     }
   };
